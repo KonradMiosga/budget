@@ -1,0 +1,53 @@
+<div class="container p-4">
+  <div class="row">
+    <div class="col-lg-4 mb-2">
+      <div class="card card-body p-2">
+        <img src="/einzahlung.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title text-center">Einnahmen</h5>
+        </div>
+        <ul #einzahlungListe class="list-group list-group-flush">
+          <li *ngFor="let entry of einzahlungData" class="list-group-item d-flex justify-content-between">
+            <span>{{entry.name}}</span>
+            <span>{{entry.amount.toFixed(2)}} €</span>
+          </li>
+        </ul>
+        <div class="card-footer d-flex justify-content-between" style="background-color: rgb(150, 232, 163);">
+          <span>Gesamt:</span>
+          <span #einzahlungErg>{{einzahlungTotal.toFixed(2)}} €</span>
+        </div>
+        <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-2">
+      <div class="card card-body p-2">
+        <img src="/auszahlung.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title text-center">Ausgaben</h5>
+        </div>
+        <ul #auszahlungListe class="list-group list-group-flush">
+          <li *ngFor="let entry of auszahlungData" class="list-group-item d-flex justify-content-between">
+            <span>{{ entry.name }}</span>
+            <span>{{ entry.amount.toFixed(2) }} €</span>
+          </li>
+        </ul>
+        <div class="card-footer d-flex justify-content-between" style="background-color: rgb(237, 171, 171);">
+          <span>Gesamt:</span>
+          <span #auszahlungErg>{{ auszahlungTotal.toFixed(2) }} €</span>
+        </div>
+        <canvas #chartAuszahlung class="p-2" style="width:100%"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-2">
+      <div class="card card-body p-2">
+        <img src="/ergebnis.jpg" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title text-center">Rest-Budget</h5>
+        </div>
+        <div #gesamtErg class="card-footer" style="background-color: rgb(239, 251, 185);">{{summeTotal.toFixed(2)}} €
+        </div>
+        <canvas #myChartRest class="p-2" style="width:100%"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

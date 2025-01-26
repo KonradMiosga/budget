@@ -1,0 +1,111 @@
+<div class="content">
+    <ng-container *ngIf="loginVisible">
+        <div id="logindiv" class="container p-4">
+            <div class="card card-body p-2">
+                <p class="h4 px-3 py-2 text-center">Login</p>
+                <!-- Email input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="loginName">Email:</label>
+                    <input #loginEmailBox type="email" [(ngModel)]="loginEmail" id="loginName" class="form-control" />
+                </div>
+                <!-- Password input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="loginPassword">Password:</label>
+                    <input #loginPasswordBox type="password" id="loginPassword" [(ngModel)]="loginPassword" class="form-control" />
+                </div>
+                <!-- Submit button -->
+                <div class="d-flex justify-content-between px-3 py-2">
+                    <!-- <span> -->
+                    <!--   Kein Account? jetzt -->
+                    <!--   <a href="javascript:void(0)" (click)="navigateToRegister()">Registrieren</a> -->
+                    <!-- </span> -->
+                    <span class="ms-auto">
+                        <button (click)="loginsubmit()" class="btn btn-primary m-1">Login</button>
+                        <button (click)="showRegister()" class="btn btn-primary">SignUp Now!</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="profileVisible">
+        <div id="profilediv" class="container p-4">
+            <div class="card card-body p-2">
+                <p class="h4 px-3 py-2 text-center">Profil</p>
+                <!-- Email input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="userName">Email:</label>
+                    <input #userEmailBox type="email" [(ngModel)]="userEmail" id="userName" class="form-control" />
+                </div>
+                <!-- Password input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="userPassword">Password:</label>
+                    <input #userPasswordBox type="password" [(ngModel)]="userPassword" id="userPassword" class="form-control" />
+                </div>
+                <!-- Firstname input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="userFirstname">Vorname:</label>
+                    <input #userFirstnameBox type="text" [(ngModel)]="userFirstname" id="userFirstname" class="form-control" />
+                </div>
+                <!-- Lastname input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label" for="userLastname">Nachname:</label>
+                    <input #userLastnameBox type="text" [(ngModel)]="userLastname" id="userLastname" class="form-control" />
+                </div>
+                <!-- Submit button -->
+                <div class="d-flex justify-content-between px-3 py-2">
+                    <span class="ms-auto">
+                        <button (click)="updateProfile()" id="savesubmit" class="btn btn-primary m-1">Speichern</button>
+                        <button (click)="logoutsubmit()" class="btn btn-primary">Logout</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="registerVisible">
+        <div class="container p-4">
+            <div class="card card-body p-2">
+                <p class="h4 px-3 py-2">Registrieren:</p>
+                <!-- Name input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label pt-2" for="registerName">Vorname</label>
+                    <input [(ngModel)]="regFirstname" type="text" id="registerVorname" class="form-control" />
+                </div>
+                <!-- Username input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label pt-2" for="registerNachname">Nachname</label>
+                    <input [(ngModel)]="regLastname" type="text" id="registerNachname" class="form-control" />
+                </div>
+                <!-- Email input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label pt-2" for="registerEmail">Email</label>
+                    <input [(ngModel)]="regEmail" type="email" id="registerEmail" class="form-control" />
+                </div>
+                <!-- Password input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label pt-2" for="registerPassword">Password</label>
+                    <input [(ngModel)]="regPassword" type="password" id="registerPassword" class="form-control" />
+                </div>
+                <!-- Repeat Password input -->
+                <div data-mdb-input-init class="form-outline px-3">
+                    <label class="form-label pt-2" for="registerRepeatPassword">Repeat password</label>
+                    <input [(ngModel)]="regRepPassword" type="password" id="registerRepeatPassword" class="form-control" />
+                </div>
+                <!-- Checkbox -->
+                <!-- <div class="form-check d-flex justify-content-center pt-3"> -->
+                <!--     <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" /> -->
+                <!--     <label class="form-check-label" for="registerCheck"> -->
+                <!--         Ich akzeptiere die <a href="agreement.html">Nutzungsbedingungen</a> -->
+                <!--     </label> -->
+                <!-- </div> -->
+                <!-- Submit button -->
+                <div class="justify-content-center d-flex m-2">
+                    <span class="ms-auto">
+                        <button (click)="register()" id="registersubmit" type="submit" class="btn btn-primary m-1">SignUp</button>
+                        <button (click)="showLogin()" id="registercancel" type="submit" class="btn btn-primary">Cancel</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
