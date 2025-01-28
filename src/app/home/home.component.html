@@ -1,53 +1,63 @@
 <div class="container p-4">
-  <div class="row">
-    <div class="col-lg-4 mb-2">
-      <div class="card card-body p-2">
-        <img src="/einzahlung.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-center">Einnahmen</h5>
+    <div class="row">
+        <div class="col-lg-4 mb-2">
+            <div class="card card-body p-2 text-center">
+                <img src="/einzahlung.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Einnahmen</h5>
+                    <button class="btn btn-primary btn-sm ms-2" title="Add" (click)="navToAddIncome()"><i class="bi bi-plus-square-fill"></i> Add</button>
+                </div>
+                <ul #einzahlungListe class="list-group list-group-flush">
+                    <li *ngFor="let entry of einzahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">
+                        <span>{{entry.name}}</span>
+                        <span>{{entry.amount.toFixed(2)}} €
+                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit" (click)="navToEdit(entry)" ><i class="bi bi-pencil-square"></i></button>
+                            <button *ngIf="entry.isHovered" class="btn btn-danger btn-sm ms-2" title="Delete" (click)="deleteEntry(entry)"><i class="bi bi-trash"></i></button></span>
+                    </li>
+                </ul>
+                <div class="card-footer d-flex justify-content-between" style="background-color: rgb(150, 232, 163);">
+                    <span>Gesamt:</span>
+                    <span #einzahlungErg>{{einzahlungTotal.toFixed(2)}} €</span>
+                </div>
+                <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
+            </div>
         </div>
-        <ul #einzahlungListe class="list-group list-group-flush">
-          <li *ngFor="let entry of einzahlungData" class="list-group-item d-flex justify-content-between">
-            <span>{{entry.name}}</span>
-            <span>{{entry.amount.toFixed(2)}} €</span>
-          </li>
-        </ul>
-        <div class="card-footer d-flex justify-content-between" style="background-color: rgb(150, 232, 163);">
-          <span>Gesamt:</span>
-          <span #einzahlungErg>{{einzahlungTotal.toFixed(2)}} €</span>
+        <div class="col-lg-4 mb-2">
+            <div class="card card-body p-2 text-center">
+                <img src="/auszahlung.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Ausgaben</h5>
+                    <button class="btn btn-primary btn-sm ms-2" title="Add" (click)="navToAddExpense()"><i class="bi bi-plus-square-fill"></i> Add</button>
+                </div>
+                <ul #auszahlungListe class="list-group list-group-flush">
+                    <li *ngFor="let entry of auszahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">
+                        <span>{{ entry.name }}</span>
+                        <span>{{ entry.amount.toFixed(2) }} €
+                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                            <button *ngIf="entry.isHovered" class="btn btn-danger btn-sm ms-2" title="Delete" (click)="deleteEntry(entry)"><i class="bi bi-trash"></i></button>
+
+                        </span>
+                    </li>
+                </ul>
+                <div class="card-footer d-flex justify-content-between" style="background-color: rgb(237, 171, 171);">
+                    <span>Gesamt:</span>
+                    <span #auszahlungErg>{{ auszahlungTotal.toFixed(2) }} €
+
+                    </span>
+                </div>
+                <canvas #chartAuszahlung class="p-2" style="width:100%"></canvas>
+            </div>
         </div>
-        <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
-      </div>
+        <div class="col-lg-4 mb-2">
+            <div class="card card-body p-2">
+                <img src="/ergebnis.jpg" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Rest-Budget</h5>
+                </div>
+                <div #gesamtErg class="card-footer" style="background-color: rgb(239, 251, 185);">{{summeTotal.toFixed(2)}} €
+                </div>
+                <canvas #chartRest class="p-2" style="width:100%"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-4 mb-2">
-      <div class="card card-body p-2">
-        <img src="/auszahlung.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-center">Ausgaben</h5>
-        </div>
-        <ul #auszahlungListe class="list-group list-group-flush">
-          <li *ngFor="let entry of auszahlungData" class="list-group-item d-flex justify-content-between">
-            <span>{{ entry.name }}</span>
-            <span>{{ entry.amount.toFixed(2) }} €</span>
-          </li>
-        </ul>
-        <div class="card-footer d-flex justify-content-between" style="background-color: rgb(237, 171, 171);">
-          <span>Gesamt:</span>
-          <span #auszahlungErg>{{ auszahlungTotal.toFixed(2) }} €</span>
-        </div>
-        <canvas #chartAuszahlung class="p-2" style="width:100%"></canvas>
-      </div>
-    </div>
-    <div class="col-lg-4 mb-2">
-      <div class="card card-body p-2">
-        <img src="/ergebnis.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-center">Rest-Budget</h5>
-        </div>
-        <div #gesamtErg class="card-footer" style="background-color: rgb(239, 251, 185);">{{summeTotal.toFixed(2)}} €
-        </div>
-        <canvas #myChartRest class="p-2" style="width:100%"></canvas>
-      </div>
-    </div>
-  </div>
 </div>
