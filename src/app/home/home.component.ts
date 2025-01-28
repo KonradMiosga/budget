@@ -18,6 +18,10 @@ export class HomeComponent implements OnInit {
   @ViewChild('chartRest', { static: false }) chartRestRef!: ElementRef;
   chartEinzahlung!: Chart;
   chartAuszahlung!: Chart;
+  chartRest!: Chart;
+  isChartEinzahlungSwitcher: boolean = false;
+  isChartAuszahlungHidden: boolean = true;
+  isChartRestHidden: boolean = true;
 
   dataInput: { name: string; amount: number; type: string; description: string }[] = [];
   einzahlungData: { name: string; amount: number; type: string; description: string; isHovered: boolean }[] = [];
@@ -25,6 +29,7 @@ export class HomeComponent implements OnInit {
   einzahlungTotal: number = 0;
   auszahlungTotal: number = 0;
   summeTotal: number = 0;
+
   exampleData = [{
     name: "Bsp.-Gehalt",
     amount: 2000,
@@ -66,6 +71,7 @@ export class HomeComponent implements OnInit {
     type: "Ausgabe",
     description: ""
   }];
+
   hasToken: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -164,10 +170,9 @@ export class HomeComponent implements OnInit {
       name: data.name
     };
 
-    // Use POST or PUT for a body payload
     this.http.delete(`${config.apiUrl}/entries`, {
       body: tokenName,
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
+      // headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).subscribe({
       next: (message) => {
         console.log('Entry deleted successfully:', message);
@@ -191,6 +196,8 @@ export class HomeComponent implements OnInit {
     '#00a300',
   ];
 
+  // chartDataEinzahlung: { labels: string[], datasets: { data: number[], backgroundColor: string[] }[] } = { labels: [], datasets: [] };
+
   createCharts(): void {
     console.log('trying to create charts');
 
@@ -198,6 +205,10 @@ export class HomeComponent implements OnInit {
     const auszahlLabels = this.auszahlungData.sort((a, b) => b.amount - a.amount).map(entry => entry.name);
     const einzahlValues = this.einzahlungData.sort((a, b) => b.amount - a.amount).map(entry => entry.amount);
     const auszahlValues = this.auszahlungData.sort((a, b) => b.amount - a.amount).map(entry => entry.amount);
+
+    // this.chartDataEinzahlung = { labels: einzahlLabels, datasets: [{ data: einzahlValues, backgroundColor: this.barColors }] };
+    // console.log(this.chartEinzahlung);
+
 
     const ctx1 = this.chartEinzahlungRef.nativeElement.getContext('2d');
     this.chartEinzahlung = new Chart(ctx1, {
@@ -209,7 +220,6 @@ export class HomeComponent implements OnInit {
           data: einzahlValues,
           hoverOffset: 10,
         }]
-
       }
     })
 
@@ -223,21 +233,21 @@ export class HomeComponent implements OnInit {
           data: auszahlValues,
           hoverOffset: 10,
         }]
-
       }
     })
 
-    // new Chart(this.chartRest.nativeElement, {
-    //   type: "pie",
-    //   data: {
-    //     labels: ["Ausgaben", "Überschuss"],
-    //     datasets: [{
-    //       backgroundColor: ["red", "yellow"],
-    //       data: [this.summeTotal, this.auszahlungTotal],
-    //       hoverOffset: 10
-    //     }]
-    //   }
-    // });
+    const ctx3 = this.chartRestRef.nativeElement.getContext('2d');
+    this.chartRest = new Chart(ctx3, {
+      type: "pie",
+      data: {
+        labels: ["Ausgaben", "Überschuss"],
+        datasets: [{
+          backgroundColor: ["red", "yellow"],
+          data: [this.auszahlungTotal, this.summeTotal],
+          hoverOffset: 10
+        }]
+      }
+    })
   }
 
   updateCharts(): void {
@@ -251,7 +261,12 @@ export class HomeComponent implements OnInit {
       this.chartAuszahlung.data.labels = this.auszahlungData.map(entry => entry.name);
       this.chartAuszahlung.data.datasets[0].data = this.auszahlungData.map(entry => entry.amount);
       this.chartAuszahlung.update(); // Re-render the chart
+
+      this.chartRest.data.labels = ["Ausgaben", "Überschuss"];
+      this.chartRest.data.datasets[0].data = [this.auszahlungTotal, this.summeTotal];
+      this.chartRest.update(); // Re-render the chart
     }
   }
 
 }
+

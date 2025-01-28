@@ -13,6 +13,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RouterLinkActive } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     RouterLinkActive,
     FormsModule,
+    SharedModule
   ],
   providers: [
     provideHttpClient(),

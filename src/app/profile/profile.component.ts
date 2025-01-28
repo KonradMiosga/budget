@@ -162,6 +162,7 @@ export class ProfileComponent implements OnInit {
       next: (response) => {
         console.log('New user added:', response);
         alert("SignUp successful! Consider logging in. ;)")
+        this.showLogin();
       },
       error: (err) => {
         console.log('Could not add new User:', err);

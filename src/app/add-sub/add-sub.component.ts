@@ -112,7 +112,7 @@ export class AddSubComponent implements OnInit {
     this.http.post(`${config.apiUrl}/entries`, entryToPost).subscribe({
       next: (response: any) => {
         console.log('Successfully posted entry', response);
-        alert(`${this.name} added successfully`);
+        alert('Great success!');
         this.flushForm()
       },
       error: (err) => {

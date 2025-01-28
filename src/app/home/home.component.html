@@ -11,7 +11,7 @@
                     <li *ngFor="let entry of einzahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">
                         <span>{{entry.name}}</span>
                         <span>{{entry.amount.toFixed(2)}} €
-                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit" (click)="navToEdit(entry)" ><i class="bi bi-pencil-square"></i></button>
+                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit" (click)="navToEdit(entry)"><i class="bi bi-pencil-square"></i></button>
                             <button *ngIf="entry.isHovered" class="btn btn-danger btn-sm ms-2" title="Delete" (click)="deleteEntry(entry)"><i class="bi bi-trash"></i></button></span>
                     </li>
                 </ul>
@@ -19,7 +19,10 @@
                     <span>Gesamt:</span>
                     <span #einzahlungErg>{{einzahlungTotal.toFixed(2)}} €</span>
                 </div>
-                <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
+                <!-- <an-pie-chart [chartData]="chartDataEinzahlung"></an-pie-chart> -->
+                <!-- <ng-container *ngIf="isChartEinzahlungSwitcher"> -->
+                    <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
+                <!-- </ng-container> -->
             </div>
         </div>
         <div class="col-lg-4 mb-2">
@@ -33,7 +36,7 @@
                     <li *ngFor="let entry of auszahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">
                         <span>{{ entry.name }}</span>
                         <span>{{ entry.amount.toFixed(2) }} €
-                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit"><i class="bi bi-pencil-square"></i></button>
+                            <button *ngIf="entry.isHovered" class="btn btn-secondary btn-sm ms-2" title="Edit" (click)="navToEdit(entry)"><i class="bi bi-pencil-square"></i></button>
                             <button *ngIf="entry.isHovered" class="btn btn-danger btn-sm ms-2" title="Delete" (click)="deleteEntry(entry)"><i class="bi bi-trash"></i></button>
 
                         </span>
