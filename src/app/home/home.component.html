@@ -5,7 +5,9 @@
                 <img src="/einzahlung.jpg" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title text-center">Einnahmen</h5>
+                    <ng-container *ngIf="hasToken">
                     <button class="btn btn-primary btn-sm ms-2" title="Add" (click)="navToAddIncome()"><i class="bi bi-plus-square-fill"></i> Add</button>
+                    </ng-container>
                 </div>
                 <ul #einzahlungListe class="list-group list-group-flush">
                     <li *ngFor="let entry of einzahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">
@@ -19,10 +21,7 @@
                     <span>Gesamt:</span>
                     <span #einzahlungErg>{{einzahlungTotal.toFixed(2)}} €</span>
                 </div>
-                <!-- <an-pie-chart [chartData]="chartDataEinzahlung"></an-pie-chart> -->
-                <!-- <ng-container *ngIf="isChartEinzahlungSwitcher"> -->
                     <canvas #chartEinzahlung class="p-2" style="width:100%"></canvas>
-                <!-- </ng-container> -->
             </div>
         </div>
         <div class="col-lg-4 mb-2">
@@ -30,7 +29,9 @@
                 <img src="/auszahlung.jpg" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title text-center">Ausgaben</h5>
+                    <ng-container *ngIf="hasToken">
                     <button class="btn btn-primary btn-sm ms-2" title="Add" (click)="navToAddExpense()"><i class="bi bi-plus-square-fill"></i> Add</button>
+                    </ng-container>
                 </div>
                 <ul #auszahlungListe class="list-group list-group-flush">
                     <li *ngFor="let entry of auszahlungData" class="list-group-item d-flex justify-content-between" (mouseenter)="hasToken && (entry.isHovered = true)" (mouseleave)="entry.isHovered = false">

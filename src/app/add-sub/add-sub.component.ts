@@ -13,14 +13,29 @@ import { Router } from '@angular/router';
 export class AddSubComponent implements OnInit {
   amount: string = '';
   name: string = '';
+  tempName: string = '';
   description: string = '';
   type: string = '';
   category: string = '';
-  // isCategoryEnabled: boolean = false;
   isAddButtonEnabled: boolean = false;
   currentState: { stateType: string; stateIntend: string } = { stateType: '', stateIntend: '' };
 
   setEnvironment(): void {
+    this.entry = history.state.entry || null;
+    console.log('Entry when entring add/edit: ', this.entry);
+    if (this.entry) {
+      this.currentState.stateType = this.entry.type;
+      if (this.entry.name) {
+        this.currentState.stateIntend = 'ändern';
+        this.name = this.entry.name;
+        this.tempName = this.entry.name;
+        this.amount = this.entry.amount;
+        this.type = this.entry.type;
+        this.description = this.entry.description;
+      } else {
+        this.currentState.stateIntend = 'erstellen';
+      }
+    }
     switch (this.currentState.stateType) {
       case 'Einnahme':
         this.type = 'Einnahme';
@@ -37,67 +52,46 @@ export class AddSubComponent implements OnInit {
     this.amount = '';
     this.name = '';
     this.description = '';
-
     this.type = '';
     this.category = '';
-    // this.isCategoryEnabled = false;
     this.isAddButtonEnabled = false;
   }
-
-
-  // expenseCategories: string[] = [
-  //   'Wohnen', 'Transport', 'Lebensmittel', 'Versicherung', 'Freizeit',
-  //   'Sonstiges', 'Gesundheit', 'Bildung', 'Kredite/Schulden', 'Steuern',
-  //   'Haushaltsgeräte', 'Kinderbetreuung', 'Geschenke/Spenden', 'Tierhaltung'
-  // ];
-  //
-  // incomeCategories: string[] = [
-  //   'Gehalt', 'Zinsen', 'Nebenjob', 'Mieteinnahmen', 'Rente/Pension',
-  //   'Unterstützung', 'Bonuszahlungen', 'Gewinnbeteiligung', 'Investitionen',
-  //   'Verkauf von Eigentum', 'Stipendien/Bildungsförderung'
-  // ];
-
 
   constructor(private http: HttpClient, private router: Router) { }
 
   entry!: { name: string; amount: string; type: string; category: string; description: string };
 
   ngOnInit(): void {
-    this.entry = history.state.entry || null;
-    console.log('Entry when entring add/edit: ', this.entry);
-    if (this.entry) {
-      this.currentState.stateType = this.entry.type;
-      if (this.entry.name) {
-        this.currentState.stateIntend = 'ändern';
-        this.name = this.entry.name;
-        this.amount = this.entry.amount;
-        this.type = this.entry.type;
-        this.description = this.entry.description;
-      } else {
-        this.currentState.stateIntend = 'erstellen';
-      }
-    }
-
     this.setEnvironment();
-
-
   }
-
-  // onTypeChange(): void {
-  //   this.isCategoryEnabled = !!this.type;
-  //   if (!this.isCategoryEnabled) {
-  //     this.category = '';
-  //   }
-  // }
 
   validateAddButton(): void {
     this.isAddButtonEnabled = !!this.name && parseFloat(this.amount) > 0 && !!this.type && !!localStorage.getItem('myToken')
   }
 
   addEntry(): void {
-    console.log("Clickin' da button");
     var token = localStorage.getItem('myToken');
     if (!token) return;
+    console.log(this.name, this.tempName);
+
+    if (this.name != this.tempName && this.tempName != '') {
+      const tokenName = {
+        token: token,
+        name: this.tempName
+      };
+
+      this.http.delete(`${config.apiUrl}/entries`, {
+        body: tokenName,
+      }).subscribe({
+        next: (message) => {
+          console.log('Entry deleted successfully:', message);
+        },
+        error: (err) => {
+          console.error('Error deleting entry:', err);
+        }
+      });
+
+    }
     const entryToPost = {
       token: token,
       entry: {
@@ -112,8 +106,8 @@ export class AddSubComponent implements OnInit {
     this.http.post(`${config.apiUrl}/entries`, entryToPost).subscribe({
       next: (response: any) => {
         console.log('Successfully posted entry', response);
-        alert('Great success!');
-        this.flushForm()
+        this.flushForm();
+        this.navToHome();
       },
       error: (err) => {
         console.log('Posting entry failed', err);

@@ -143,13 +143,23 @@ export class ProfileComponent implements OnInit {
 
   register(): void {
 
+    var firstName = this.regFirstname;
+    var lastName = this.regLastname;
+    var email = this.regEmail;
     var password = this.regPassword;
     var repPassword = this.regRepPassword;
 
-    if (password !== repPassword) {
-      alert("Passwords do not match");
+    if (!firstName || !lastName || !email || !password) {
+      alert('Bitte alle Felder ausfüllen!');
       return;
     }
+
+    if (password !== repPassword) {
+      alert('Passwörter stimmen nicht überein.');
+      return;
+    }
+
+
 
     var newUser = {
       email: this.regEmail,

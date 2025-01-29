@@ -4,33 +4,15 @@
         <div class="form-outline p-1">
             <label class="form-label pt-1" for="name">
                 Bezeichnung
-                <!-- <span style="color: #b3b3b1">*Mit gleichen Namen werden vorhandene Einträge bearbeitet.</span> -->
             </label>
-            <input type="text" [(ngModel)]="name" class="form-control" (change)="validateAddButton()" required />
+            <input type="text" [(ngModel)]="name" class="form-control" (input)="validateAddButton()" required />
         </div>
         <div class="form-outline p-1">
             <label class="form-label pt-1" for="amount">
                 Betrag
-                <!-- <span style="color: #b3b3b1">*Kosten in Euro pro Monat</span> -->
             </label>
-            <input type="number" step="0.01" [(ngModel)]="amount" class="form-control" (change)="validateAddButton()" required />
+            <input type="number" step="0.01" [(ngModel)]="amount" class="form-control" (input)="validateAddButton()" required />
         </div>
-        <!-- <div class="form-outline p-1"> -->
-        <!--     <select class="form-select" [(ngModel)]="category" required> -->
-        <!--         <option value="" disabled selected>Wählen Sie die Kategorie</option> -->
-        <!--         <ng-container *ngIf="type === 'Ausgabe'"> -->
-        <!--             <option *ngFor="let expense of expenseCategories" [value]="expense"> -->
-        <!--                 {{ expense }} -->
-        <!--             </option> -->
-        <!--         </ng-container> -->
-        <!---->
-        <!--         <ng-container *ngIf="type === 'Einnahme'"> -->
-        <!--             <option *ngFor="let income of incomeCategories" [value]="income"> -->
-        <!--                 {{ income }} -->
-        <!--             </option> -->
-        <!--         </ng-container> -->
-        <!--     </select> -->
-        <!-- </div> -->
         <div class="form-outline p-1">
             <label class="form-label" for="description">Beschreibung (optional):</label>
             <textarea [(ngModel)]="description" class="form-control"></textarea>
@@ -41,16 +23,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="container px-4"> -->
-<!--   <div class="card card-body p-2"> -->
-<!--     <p class="h4 p-1 text-center">Eintrag entfernen</p> -->
-<!--     <div class="form-outline p-1"> -->
-<!--       <select class="form-select" [(ngModel)]="delselection" required> -->
-<!--       </select> -->
-<!--     </div> -->
-<!--     <div class="justify-content-center d-flex m-2"> -->
-<!--       <button [(ngModel)]="deleteEntry" class="btn btn-primary" disabled>Entfernen</button> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
