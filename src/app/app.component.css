@@ -1,5 +1,0 @@
-.footer {
-      position: fixed;//this will keep the footer position fixed at margin zero
-      margin-bottom: 0;
-      width: 100%; //adjust this according to how you want
-    }

@@ -9,12 +9,12 @@ import { AgreementComponent } from './agreement/agreement.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, title: 'My Budget Planner - Home' },
   { path: 'add', component: AddSubComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'faq', component: FaqComponent },
-  { path: 'info', component: InfoComponent },
-  { path: 'agreement', component: AgreementComponent },
+  { path: 'profile', component: ProfileComponent, title: 'My Budget Planner - Profile' },
+  { path: 'faq', component: FaqComponent, title: 'My Budget Planner - FAQ' },
+  { path: 'info', component: InfoComponent, title: 'My Budget Planner - Info' },
+  { path: 'agreement', component: AgreementComponent, title: 'My Budget Planner - Agreement' },
 
 ];
 
